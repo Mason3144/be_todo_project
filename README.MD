@@ -2,6 +2,6 @@
 
 ### Implement Todo backend application
 
-- [ ] CRUD API
+- [x] CRUD API
 - [ ] Deployment with Tomcat
 - [ ] Execution server with Ngrok

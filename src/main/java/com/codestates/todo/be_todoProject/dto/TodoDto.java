@@ -26,12 +26,9 @@ public class TodoDto {
     @Setter
     public static class Patch{
         private long id;
-        @NotSpace
         private String title;
-        @NotNull
-        private int todoOrder;
-        @NotNull
-        private boolean completed;
+        private Integer todoOrder;
+        private Boolean completed;
     }
 
     @Getter

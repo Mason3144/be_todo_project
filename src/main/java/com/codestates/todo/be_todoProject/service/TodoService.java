@@ -1,6 +1,8 @@
 package com.codestates.todo.be_todoProject.service;
 
 import com.codestates.todo.be_todoProject.entity.Todos;
+import com.codestates.todo.be_todoProject.exception.businessLogicException.BusinessLogicException;
+import com.codestates.todo.be_todoProject.exception.businessLogicException.ExceptionCode;
 import com.codestates.todo.be_todoProject.repository.TodoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,11 +24,15 @@ public class TodoService {
     }
 
     public Todos updateTodo(Todos todos){
-        Todos foundTodo = repository.findById(todos.getId()).get();
+        System.out.println(todos.getId()+" "+ todos.getTodoOrder()+" "+ todos.getTitle()+" "+ todos.getCompleted());
 
-        Optional.of(todos.getTodoOrder()).ifPresent(foundTodo::setTodoOrder);
-        Optional.of(todos.getTitle()).ifPresent(foundTodo::setTitle);
-        Optional.of(todos.isCompleted()).ifPresent(foundTodo::setCompleted);
+        Todos foundTodo = findById(todos.getId());
+
+        System.out.println(foundTodo.getId()+" "+ foundTodo.getTodoOrder()+" "+ foundTodo.getTitle()+" "+ foundTodo.getCompleted());
+
+        Optional.ofNullable(todos.getTodoOrder()).ifPresent(foundTodo::setTodoOrder);
+        Optional.ofNullable(todos.getTitle()).ifPresent(foundTodo::setTitle);
+        Optional.ofNullable(todos.getCompleted()).ifPresent(foundTodo::setCompleted);
 
         return repository.save(foundTodo);
     }
@@ -36,14 +42,19 @@ public class TodoService {
     }
 
     public void removeTodo(long todoId){
-        repository.delete(repository.findById(todoId).get());
+        repository.delete(findById(todoId));
     }
 
     public Todos findTodo(long todoId){
-        return repository.findById(todoId).get();
+        return findById(todoId);
     }
 
     public List<Todos> findTodos(){
         return repository.findAll();
+    }
+
+    private Todos findById(long todoId){
+        Optional<Todos> optionalTodos = repository.findById(todoId);
+        return optionalTodos.orElseThrow(()-> new BusinessLogicException(ExceptionCode.TODO_NOT_FOUND));
     }
 }

@@ -20,8 +20,8 @@ public class Todos {
     private String title;
 
     @Column
-    private int todoOrder;
+    private Integer todoOrder;
 
     @Column
-    private boolean completed;
+    private Boolean completed;
 }
