@@ -4,6 +4,7 @@ package com.codestates.todo.be_todoProject.dto;
 import com.codestates.todo.be_todoProject.validations.notSpace.NotSpace;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -22,7 +23,9 @@ public class TodoDto {
 
     @Getter
     @Builder
+    @Setter
     public static class Patch{
+        private long id;
         @NotSpace
         private String title;
         @NotNull

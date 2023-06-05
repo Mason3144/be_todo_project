@@ -26,7 +26,7 @@ public class TodoService {
 
     }
 
-    public void removeTodo(Todos todos){
+    public void removeTodo(long todoId){
 
     }
 
